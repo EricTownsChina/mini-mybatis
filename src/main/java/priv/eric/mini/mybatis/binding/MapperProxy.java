@@ -1,5 +1,7 @@
 package priv.eric.mini.mybatis.binding;
 
+import priv.eric.mini.mybatis.session.SqlSession;
+
 import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -22,9 +24,9 @@ public class MapperProxy<T> implements InvocationHandler, Serializable {
     /**
      * sqlSession
      */
-    private final Map<String, String> sqlSession;
+    private final SqlSession sqlSession;
 
-    public MapperProxy(Class<T> mapperInterface, Map<String, String> sqlSession) {
+    public MapperProxy(Class<T> mapperInterface, SqlSession sqlSession) {
         this.mapperInterface = mapperInterface;
         this.sqlSession = sqlSession;
     }
@@ -35,7 +37,7 @@ public class MapperProxy<T> implements InvocationHandler, Serializable {
             // Object类定义的方法不需要被代理
             return method.invoke(proxy, args);
         } else {
-            return "你被代理了, " + sqlSession.get(mapperInterface.getName() + "." + method.getName());
+            return "你被代理了, " + sqlSession.getMapper(mapperInterface).getClass().getSimpleName();
         }
     }
 

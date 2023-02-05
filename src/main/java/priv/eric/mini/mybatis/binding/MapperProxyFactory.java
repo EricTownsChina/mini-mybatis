@@ -1,6 +1,7 @@
 package priv.eric.mini.mybatis.binding;
 
 import priv.eric.mini.mybatis.common.BeanUtil;
+import priv.eric.mini.mybatis.session.SqlSession;
 
 import java.lang.reflect.Proxy;
 import java.util.Map;
@@ -19,7 +20,7 @@ public class MapperProxyFactory<T> {
         this.mapperInterface = mapperInterface;
     }
 
-    public T instance(Map<String, String> sqlSession) {
+    public T newInstance(SqlSession sqlSession) {
         return BeanUtil.cast(
                 Proxy.newProxyInstance(
                         mapperInterface.getClassLoader(),

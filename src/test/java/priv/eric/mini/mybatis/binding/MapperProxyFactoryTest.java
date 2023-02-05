@@ -25,7 +25,7 @@ public class MapperProxyFactoryTest {
         Map<String, String> sqlSession = new HashMap<>(2);
         sqlSession.put("priv.eric.mini.mybatis.dao.IUserDao.queryName", "执行sql语句, 查询用户姓名");
 
-        IUserDao userDao = proxyFactory.instance(sqlSession);
+        IUserDao userDao = proxyFactory.newInstance(sqlSession);
         String userName = userDao.queryName("1111");
         LOGGER.info("查询结果: {}", userName);
     }
