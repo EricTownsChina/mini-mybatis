@@ -4,6 +4,9 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import priv.eric.mini.mybatis.dao.IUserDao;
+import priv.eric.mini.mybatis.session.SqlSession;
+import priv.eric.mini.mybatis.session.SqlSessionFactory;
+import priv.eric.mini.mybatis.session.defaults.DefaultSqlSessionFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,13 +23,25 @@ public class MapperProxyFactoryTest {
 
     @Test
     public void instance() {
+        MapperRegister mapperRegister = new MapperRegister();
+        SqlSessionFactory sqlSessionFactory = new DefaultSqlSessionFactory(mapperRegister);
+        SqlSession defaultSqlSession = sqlSessionFactory.openSession();
         MapperProxyFactory<IUserDao> proxyFactory = new MapperProxyFactory<>(IUserDao.class);
 
-        Map<String, String> sqlSession = new HashMap<>(2);
-        sqlSession.put("priv.eric.mini.mybatis.dao.IUserDao.queryName", "执行sql语句, 查询用户姓名");
-
-        IUserDao userDao = proxyFactory.newInstance(sqlSession);
+        IUserDao userDao = proxyFactory.newInstance(defaultSqlSession);
         String userName = userDao.queryName("1111");
         LOGGER.info("查询结果: {}", userName);
     }
+
+    @Test
+    public void sqlSession() {
+        MapperRegister mapperRegister = new MapperRegister();
+        SqlSessionFactory sqlSessionFactory = new DefaultSqlSessionFactory(mapperRegister);
+        SqlSession defaultSqlSession = sqlSessionFactory.openSession();
+
+        IUserDao userDao = defaultSqlSession.getMapper(IUserDao.class);
+        String userName = userDao.queryName("1111");
+        LOGGER.info("查询结果: {}", userName);
+    }
+
 }
