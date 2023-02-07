@@ -36,6 +36,7 @@ public class MapperProxyFactoryTest {
     @Test
     public void sqlSession() {
         MapperRegister mapperRegister = new MapperRegister();
+        mapperRegister.addMappers("priv.eric.mini.mybatis.dao");
         SqlSessionFactory sqlSessionFactory = new DefaultSqlSessionFactory(mapperRegister);
         SqlSession defaultSqlSession = sqlSessionFactory.openSession();
 

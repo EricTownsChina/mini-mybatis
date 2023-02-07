@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
@@ -38,25 +39,32 @@ public class ScanUtil {
         if (!StringUtils.hasText(packageName)) {
             return new ArrayList<>(0);
         }
-        packageName = packageName.replace(DOT, SLASH);
-        URL url = Thread.currentThread().getContextClassLoader().getResource(packageName);
+        String packagePath = packageName.replace(DOT, SLASH);
+        String dirName = packageName.replace(DOT, File.separator);
+        URL url = Thread.currentThread().getContextClassLoader().getResource(packagePath);
         if (url == null) {
             return new ArrayList<>(0);
         }
         if (FILE.equals(url.getProtocol())) {
-            File file = new File(URLDecoder.decode(url.getFile(), StandardCharsets.UTF_8));
-            return scanFile(file);
+            File file;
+            try {
+                file = new File(URLDecoder.decode(url.getFile(), StandardCharsets.UTF_8.name()));
+            } catch (UnsupportedEncodingException e) {
+                throw new RuntimeException("扫描包失败: ", e);
+            }
+            return scanFile(file, dirName);
         } else {
             throw new IllegalArgumentException("暂不支持扫描jar包");
         }
     }
 
-    private static List<Class<?>> scanFile(File file) {
+    private static List<Class<?>> scanFile(File file, String dirName) {
         List<Class<?>> classList = new ArrayList<>();
         if (file.isFile()) {
             String path = file.getAbsolutePath();
             if (path.endsWith(".class")) {
-                String className = path.substring(0, path.length() - 6).replace(SLASH, DOT);
+                int start = path.indexOf(dirName);
+                String className = path.substring(start, path.length() - 6).replace(SLASH, DOT);
                 Class<?> clazz = loadClass(className);
                 classList.add(clazz);
             }
@@ -67,7 +75,7 @@ public class ScanUtil {
                 return classList;
             } else {
                 for (File subFile : files) {
-                    classList.addAll(scanFile(subFile));
+                    classList.addAll(scanFile(subFile, dirName));
                 }
             }
             return classList;

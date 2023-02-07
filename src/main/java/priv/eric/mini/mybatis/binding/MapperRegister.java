@@ -1,9 +1,11 @@
 package priv.eric.mini.mybatis.binding;
 
 import priv.eric.mini.mybatis.common.BeanUtil;
+import priv.eric.mini.mybatis.common.ScanUtil;
 import priv.eric.mini.mybatis.session.SqlSession;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static priv.eric.mini.mybatis.common.Constant.INT_8;
@@ -45,7 +47,10 @@ public class MapperRegister {
     }
 
     public void addMappers(String packageName) {
-
+        List<Class<?>> classes = ScanUtil.scanClasses(packageName);
+        for (Class<?> clazz : classes) {
+            addMapper(clazz);
+        }
     }
 
 
