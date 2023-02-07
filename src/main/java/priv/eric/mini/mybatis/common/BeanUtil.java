@@ -15,12 +15,12 @@ public class BeanUtil {
      * 强转对象类型, 主要是消除黄色的告警
      *
      * @param obj   原始对象
-     * @param clazz 强转类型
-     * @param <T>   泛型T
+     * @param <T>   强转类型
      * @return 转换后的对象
      */
-    public static <T> T cast(Object obj, Class<T> clazz) {
-        return clazz.cast(obj);
+    @SuppressWarnings("unchecked")
+    public static <T> T cast(Object obj) {
+        return (T) obj;
     }
 
 }

@@ -21,12 +21,7 @@ public class MapperProxyFactory<T> {
     }
 
     public T newInstance(SqlSession sqlSession) {
-        return BeanUtil.cast(
-                Proxy.newProxyInstance(
-                        mapperInterface.getClassLoader(),
-                        new Class[]{mapperInterface},
-                        new MapperProxy<>(mapperInterface, sqlSession)),
-                mapperInterface);
+        return BeanUtil.cast(Proxy.newProxyInstance(mapperInterface.getClassLoader(), new Class[]{mapperInterface}, new MapperProxy<>(mapperInterface, sqlSession)));
     }
 
 }

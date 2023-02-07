@@ -1,5 +1,6 @@
 package priv.eric.mini.mybatis.binding;
 
+import priv.eric.mini.mybatis.common.BeanUtil;
 import priv.eric.mini.mybatis.session.SqlSession;
 
 import java.util.HashMap;
@@ -22,7 +23,7 @@ public class MapperRegister {
     }
 
     public <T> T getMapper(Class<T> mapperInterface, SqlSession sqlSession) {
-        MapperProxyFactory<T> mapperProxyFactory = (MapperProxyFactory<T>) mappers.get(mapperInterface);
+        MapperProxyFactory<T> mapperProxyFactory = BeanUtil.cast(mappers.get(mapperInterface));
         if (mapperProxyFactory == null) {
             throw new NullPointerException("未找到" + mapperInterface.getSimpleName() + "的映射器.");
         } else {
