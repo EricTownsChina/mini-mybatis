@@ -11,5 +11,7 @@ public class Constant {
     private Constant() {}
 
     public static final int INT_8 = 8;
+    public static final String DOT = ".";
+    public static final String SLASH = "/";
 
 }
