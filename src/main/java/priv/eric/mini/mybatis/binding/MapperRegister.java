@@ -2,13 +2,13 @@ package priv.eric.mini.mybatis.binding;
 
 import priv.eric.mini.mybatis.common.BeanUtil;
 import priv.eric.mini.mybatis.common.ScanUtil;
+import priv.eric.mini.mybatis.session.Configuration;
 import priv.eric.mini.mybatis.session.SqlSession;
+import priv.eric.mini.mybatis.common.Constant;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static priv.eric.mini.mybatis.common.Constant.INT_8;
 
 /**
  * Description: 映射器(MapperProxyFactory)注册机
@@ -18,10 +18,12 @@ import static priv.eric.mini.mybatis.common.Constant.INT_8;
  */
 public class MapperRegister {
 
-    private final Map<Class<?>, MapperProxyFactory<?>> mappers = new HashMap<>(INT_8);
+    private Configuration configuration;
 
-    public MapperRegister() {
+    private final Map<Class<?>, MapperProxyFactory<?>> mappers = new HashMap<>(Constant.INT_8);
 
+    public MapperRegister(Configuration configuration) {
+        this.configuration = configuration;
     }
 
     public <T> T getMapper(Class<T> mapperInterface, SqlSession sqlSession) {

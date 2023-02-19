@@ -1,7 +1,7 @@
 package priv.eric.mini.mybatis.session.defaults;
 
-import priv.eric.mini.mybatis.binding.MapperRegister;
 import priv.eric.mini.mybatis.session.SqlSession;
+import priv.eric.mini.mybatis.session.Configuration;
 
 /**
  * Description: 默认SqlSession实现
@@ -11,13 +11,10 @@ import priv.eric.mini.mybatis.session.SqlSession;
  */
 public class DefaultSqlSession implements SqlSession {
 
-    /**
-     * 映射器注册机
-     */
-    private final MapperRegister mapperRegister;
+    private Configuration configuration;
 
-    public DefaultSqlSession(MapperRegister mapperRegister) {
-        this.mapperRegister = mapperRegister;
+    public DefaultSqlSession(Configuration configuration) {
+        this.configuration = configuration;
     }
 
     @Override
@@ -27,6 +24,6 @@ public class DefaultSqlSession implements SqlSession {
 
     @Override
     public <T> T getMapper(Class<T> mapperInterface) {
-        return mapperRegister.getMapper(mapperInterface, this);
+        return configuration.getMapper(mapperInterface, this);
     }
 }

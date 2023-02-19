@@ -1,4 +1,4 @@
-package priv.eric.mini.mybatis.ths;
+package priv.eric.mini.mybatis.test.ths;
 
 import java.util.Arrays;
 import java.util.HashMap;

@@ -12,9 +12,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-import static priv.eric.mini.mybatis.common.Constant.DOT;
-import static priv.eric.mini.mybatis.common.Constant.SLASH;
-
 /**
  * Description: 类型查找发现工具类
  *
@@ -39,8 +36,8 @@ public class ScanUtil {
         if (!StringUtils.hasText(packageName)) {
             return new ArrayList<>(0);
         }
-        String packagePath = packageName.replace(DOT, SLASH);
-        String dirName = packageName.replace(DOT, File.separator);
+        String packagePath = packageName.replace(Constant.DOT, Constant.SLASH);
+        String dirName = packageName.replace(Constant.DOT, File.separator);
         URL url = Thread.currentThread().getContextClassLoader().getResource(packagePath);
         if (url == null) {
             return new ArrayList<>(0);
@@ -64,7 +61,7 @@ public class ScanUtil {
             String path = file.getAbsolutePath();
             if (path.endsWith(".class")) {
                 int start = path.indexOf(dirName);
-                String className = path.substring(start, path.length() - 6).replace(SLASH, DOT);
+                String className = path.substring(start, path.length() - 6).replace(Constant.SLASH, Constant.DOT);
                 Class<?> clazz = loadClass(className);
                 classList.add(clazz);
             }

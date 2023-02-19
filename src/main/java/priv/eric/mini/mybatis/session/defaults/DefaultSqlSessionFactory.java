@@ -1,6 +1,6 @@
 package priv.eric.mini.mybatis.session.defaults;
 
-import priv.eric.mini.mybatis.binding.MapperRegister;
+import priv.eric.mini.mybatis.session.Configuration;
 import priv.eric.mini.mybatis.session.SqlSession;
 import priv.eric.mini.mybatis.session.SqlSessionFactory;
 
@@ -12,15 +12,15 @@ import priv.eric.mini.mybatis.session.SqlSessionFactory;
  */
 public class DefaultSqlSessionFactory implements SqlSessionFactory {
 
-    private final MapperRegister mapperRegister;
+    private Configuration configuration;
 
-    public DefaultSqlSessionFactory(MapperRegister mapperRegister) {
-        this.mapperRegister = mapperRegister;
+    public DefaultSqlSessionFactory(Configuration configuration) {
+        this.configuration = configuration;
     }
 
     @Override
     public SqlSession openSession() {
-        return new DefaultSqlSession(mapperRegister);
+        return new DefaultSqlSession(configuration);
     }
 
 }

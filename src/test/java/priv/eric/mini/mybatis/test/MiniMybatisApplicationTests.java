@@ -1,4 +1,4 @@
-package priv.eric.mini.mybatis;
+package priv.eric.mini.mybatis.test;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

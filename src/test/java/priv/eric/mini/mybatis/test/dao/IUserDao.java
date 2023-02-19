@@ -1,4 +1,6 @@
-package priv.eric.mini.mybatis.dao;
+package priv.eric.mini.mybatis.test.dao;
+
+import priv.eric.mini.mybatis.test.po.User;
 
 /**
  * Description: 测试userMapper
@@ -11,5 +13,7 @@ public interface IUserDao {
     String queryName(String userId);
 
     Integer queryAge(String userId);
+
+    User queryUserInfoById(Long id);
 
 }

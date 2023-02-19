@@ -1,4 +1,4 @@
-package priv.eric.mini.mybatis.ths;
+package priv.eric.mini.mybatis.test.ths;
 
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;

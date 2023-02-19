@@ -5,7 +5,6 @@ import priv.eric.mini.mybatis.session.SqlSession;
 import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
-import java.util.Map;
 
 /**
  * Description: Mapper接口的代码类

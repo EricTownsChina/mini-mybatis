@@ -4,7 +4,6 @@ import priv.eric.mini.mybatis.common.BeanUtil;
 import priv.eric.mini.mybatis.session.SqlSession;
 
 import java.lang.reflect.Proxy;
-import java.util.Map;
 
 /**
  * Description: mapper代理工厂
