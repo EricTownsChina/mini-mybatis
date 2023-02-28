@@ -4,6 +4,18 @@
 
 <configuration>
 
+    <environments default="dev">
+        <environment id="dev">
+            <transactionManager type="JDBC" />
+            <dataSource type="DRUID">
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://127.0.0.1:3306/my?useUnicode=true"/>
+                <property name="username" value="root"/>
+                <property name="password" value="111111"/>
+            </dataSource>
+        </environment>
+    </environments>
+
     <mappers>
         <mapper resource="mapper/User_Mapper.xml"/>
     </mappers>

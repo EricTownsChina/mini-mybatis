@@ -55,6 +55,18 @@ public class XmlConfigBuilder extends BaseBuilder {
         return this.configuration;
     }
 
+    private void environmentsElement(Element environments) throws Exception {
+        String environment = environments.attributeValue("default");
+        List<Element> environmentList = environments.elements("environment");
+        Element defaultEnvironment = environmentList.stream()
+                .filter(e -> environment.equals(e.attributeValue("id")))
+                .findFirst()
+                .orElseThrow(() -> {throw new IllegalArgumentException();});
+
+
+    }
+
+
     private void mapperElement(Element mappers) throws Exception {
         List<Element> mapperList = mappers.elements("mapper");
         for (Element element : mapperList) {
