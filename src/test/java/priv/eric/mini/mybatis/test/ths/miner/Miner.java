@@ -1,4 +1,4 @@
-package priv.eric.mini.mybatis.test.ths;
+package priv.eric.mini.mybatis.test.ths.miner;
 
 import java.lang.reflect.Field;
 import java.util.*;
