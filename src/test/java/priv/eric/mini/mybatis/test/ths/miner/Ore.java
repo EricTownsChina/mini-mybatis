@@ -34,6 +34,10 @@ public class Ore {
         return new Ore(oreValue);
     }
 
+    public static Ore emptyOre() {
+        return of(null);
+    }
+
     public Object getValue() {
         return value;
     }
