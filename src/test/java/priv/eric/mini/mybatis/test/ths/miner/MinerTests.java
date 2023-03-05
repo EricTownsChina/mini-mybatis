@@ -19,7 +19,9 @@ public class MinerTests {
     private static final Logger LOGGER = LoggerFactory.getLogger(MinerTests.class);
 
     public static void main(String[] args) {
-//        Miner miner = Miner.explore(testObj(), ".s33[2]");
+        Miner miner = Miner.newInstance(testObj(), ".s33[2]");
+        Object explore = miner.explore();
+        LOGGER.info("result: {}", explore);
     }
 
     public static Object testObj() {
