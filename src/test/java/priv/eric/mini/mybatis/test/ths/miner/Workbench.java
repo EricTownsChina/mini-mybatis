@@ -1,6 +1,12 @@
 package priv.eric.mini.mybatis.test.ths.miner;
 
+import org.springframework.util.StringUtils;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * Description: 工作台
@@ -51,14 +57,36 @@ public class Workbench {
     }
 
     private Object roughing(String processOrder) {
-
-
-
-        return null;
+        Object preValue = preOre.getValue();
+        if (preOre.isObject()) {
+            Map<String, Object> valueMap = Toolbox.toMap(preValue);
+            return valueMap.get(processOrder);
+        } else {
+            List<Map<String, Object>> valueMaps = Toolbox.toList(preValue);
+            return valueMaps.stream().map(v -> v.get(processOrder)).collect(Collectors.toList());
+        }
     }
 
     private Object deep(String deepOrder, Object value) {
-        return null;
+        if (Objects.isNull(value) || !(value instanceof Collection)) {
+            this.message = "pre value is null or not a collection!";
+            throw new IllegalArgumentException(this.message);
+        }
+
+        try {
+            int index = Integer.parseInt(deepOrder);
+            Collection<?> collectionObj = (Collection<?>) value;
+            Object[] objects = collectionObj.toArray();
+            if (index < 0) {
+                // 小于0为倒数
+                return objects[objects.length + index];
+            } else {
+                return objects[index];
+            }
+        } catch (NumberFormatException e) {
+            this.message = String.format("index not number: [%s]", deepOrder);
+            throw new NumberFormatException(this.message);
+        }
     }
 
     private String[] read() {
