@@ -61,7 +61,7 @@ public class XmlConfigBuilder extends BaseBuilder {
         Element defaultEnvironment = environmentList.stream()
                 .filter(e -> environment.equals(e.attributeValue("id")))
                 .findFirst()
-                .orElseThrow(() -> {throw new IllegalArgumentException();});
+                .orElseThrow(IllegalArgumentException::new);
 
 
     }
