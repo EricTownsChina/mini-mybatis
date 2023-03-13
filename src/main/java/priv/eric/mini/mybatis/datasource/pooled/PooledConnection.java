@@ -1,5 +1,7 @@
 package priv.eric.mini.mybatis.datasource.pooled;
 
+import priv.eric.mini.mybatis.datasource.unpooled.UnPooledDatasource;
+
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
@@ -20,7 +22,6 @@ public class PooledConnection implements InvocationHandler {
     private int hashCode = 0;
 
     private PooledDatasource datasource;
-
     /**
      * 真实的连接
      */
@@ -35,9 +36,10 @@ public class PooledConnection implements InvocationHandler {
 
     private boolean valid;
 
-    public PooledConnection(Connection connection, PooledDatasource pooledDatasource) {
+    public PooledConnection(Connection connection, PooledDatasource datasource) {
         this.hashCode = connection.hashCode();
         this.realConnection = connection;
+        this.datasource = datasource;
         this.proxyConnection = (Connection) Proxy.newProxyInstance(Connection.class.getClassLoader(), INTERFACES, this);
         long now = System.currentTimeMillis();
         this.createdTimestamp = now;
@@ -68,5 +70,45 @@ public class PooledConnection implements InvocationHandler {
         if (!this.valid) {
             throw new SQLException("Error access PooledConnection, Connection is invalid.");
         }
+    }
+
+    public int getHashCode() {
+        return realConnection == null ? 0 : realConnection.hashCode();
+    }
+
+    public Connection getRealConnection() {
+        return realConnection;
+    }
+
+    public Connection getProxyConnection() {
+        return proxyConnection;
+    }
+
+    public void setProxyConnection(Connection proxyConnection) {
+        this.proxyConnection = proxyConnection;
+    }
+
+    public long getCreatedTimestamp() {
+        return createdTimestamp;
+    }
+
+    public void setCreatedTimestamp(long createdTimestamp) {
+        this.createdTimestamp = createdTimestamp;
+    }
+
+    public long getLastUsedTimestamp() {
+        return lastUsedTimestamp;
+    }
+
+    public void setLastUsedTimestamp(long lastUsedTimestamp) {
+        this.lastUsedTimestamp = lastUsedTimestamp;
+    }
+
+    public boolean isValid() {
+        return valid && realConnection != null && datasource.pingConnection(this);
+    }
+
+    public void setValid(boolean valid) {
+        this.valid = valid;
     }
 }
