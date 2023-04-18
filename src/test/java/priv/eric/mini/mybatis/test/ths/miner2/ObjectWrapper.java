@@ -14,7 +14,7 @@ public class ObjectWrapper {
 
     public static final ObjectWrapper NULL_OBJECT_WRAPPER = new ObjectWrapper(null);
 
-    private Object ore;
+    private final Object ore;
 
     public ObjectWrapper(Object ore) {
         this.ore = ore;
@@ -27,6 +27,10 @@ public class ObjectWrapper {
         } else {
             return new ObjectWrapper(value);
         }
+    }
+
+    public Object getOre() {
+        return this.ore;
     }
 
     public Object getValue(String name) {
